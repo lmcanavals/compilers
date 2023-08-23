@@ -45,15 +45,23 @@ int lex(struct Handler *h) {
     } while ((h->lexem[i] >= 'a' && h->lexem[i] <= 'z') ||
              (h->lexem[i] >= 'A' && h->lexem[i] <= 'Z') ||
              (h->lexem[i] >= '0' && h->lexem[i] <= '9') || h->lexem[i] == '_');
-		h->lexem[i] =	'\0';
+    h->lexem[i] = '\0';
     ungetc(h->lexem[i], h->file);
-		if (strcmp(h->lexem, "if") == 0) {
-			return IF;
-		} else if (strcmp(h->lexem, "else") == 0) {
-			return ELSE;
-		}
-		return ID;
+    if (strcmp(h->lexem, "if") == 0) {
+      return IF;
+    } else if (strcmp(h->lexem, "else") == 0) {
+      return ELSE;
+    }
+    return ID;
   }
+  if (h->lexem[i] >= '0' && h->lexem[i] <= '9') {
+    do {
+      h->lexem[++i] = fgetc(h->file);
+    } while (h->lexem[i] >= '0' && h->lexem[i] <= '9');
+    h->lexem[i] = '\0';
+    ungetc(h->lexem[i], h->file);
+		return NUM;
+	}
   return h->lexem[i] != EOF ? lex(h) : EOF;
 }
 
@@ -65,7 +73,7 @@ int main(int argc, char *argv[]) {
   struct Handler *handler = (struct Handler *)malloc(sizeof(struct Handler));
   handler->file = fopen(argv[1], "r");
 
-	int tok;
+  int tok;
   while ((tok = lex(handler)) != EOF) {
     printf("Lexem (%d): %s\n", tok, handler->lexem);
   }
