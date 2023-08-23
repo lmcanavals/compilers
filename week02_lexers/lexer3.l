@@ -1,8 +1,5 @@
 %{
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #define COMP 256
 #define ID 257
 #define IF 258
