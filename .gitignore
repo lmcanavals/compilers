@@ -33,3 +33,4 @@
 
 # Custom fol flex
 *.yy.c
+*.tab.c
