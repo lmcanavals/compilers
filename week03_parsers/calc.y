@@ -11,7 +11,7 @@ void yyerror(char const *);
 
 %%
 
-s :
+s:
 		%empty
 	| s line
 	;
