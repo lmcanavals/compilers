@@ -31,6 +31,13 @@
 *.out
 *.app
 
-# Custom fol flex
+# Custom for flex
 *.yy.c
 *.tab.c
+
+# Custom for antlr
+*[lL]istener.*
+*[lL]exer.*
+*[pP]arser.*
+*.interp
+*.tokens
