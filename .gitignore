@@ -41,5 +41,6 @@
 *[pP]arser.*
 *.interp
 *.tokens
+*.class
 !*Parser.g4
 !*Lexer.g4
