@@ -39,6 +39,7 @@
 *[lL]istener.*
 *[lL]exer.*
 *[pP]arser.*
+*[vV]isitor.*
 *.interp
 *.tokens
 *.class
