@@ -49,3 +49,6 @@
 # Custom for llvm
 *.s
 *.ll
+*.dot
+*.png
+*.arm
