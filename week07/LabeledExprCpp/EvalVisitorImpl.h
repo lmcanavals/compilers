@@ -1,5 +1,6 @@
 #include "LabeledExprBaseVisitor.h"
 #include "LabeledExprParser.h"
+#include <algorithm>
 #include <any>
 #include <iostream>
 #include <map>
@@ -20,8 +21,8 @@ public:
 
 	/* expr NEWLINE */
 	std::any visitPrintExpr(LabeledExprParser::PrintExprContext* ctx) {
-		auto value = visitChildren(ctx->expr());
-		std::cout << std::any_cast<int>(value) << '\n';
+		auto value = std::any_cast<int>(visitChildren(ctx->expr()));
+		std::cout << value << '\n';
 		return std::any();
 	}
 
@@ -54,6 +55,7 @@ public:
 	std::any visitAddSub(LabeledExprParser::AddSubContext* ctx) {
 		auto left = std::any_cast<int>(visit(ctx->expr(0)));
 		auto right = std::any_cast<int>(visit(ctx->expr(1)));
+		std::cout << left << "  " << right << std::endl;
 		int resp;
 		if (ctx->op->getType() == LabeledExprParser::ADD) {
 			resp = left + right;
