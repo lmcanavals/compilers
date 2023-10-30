@@ -1,7 +1,6 @@
 #include <cctype>
 #include <cstdio>
 #include <cstdlib>
-#include <iostream>
 #include <map>
 #include <memory>
 #include <string>
@@ -119,12 +118,13 @@ public:
   const std::string &getName() const { return Name; }
 };
 
-class FuncionAST {
+class FunctionAST {
   std::unique_ptr<PrototypeAST> Proto;
   std::unique_ptr<ExprAST> Body;
 
 public:
-  FuncionAST(std::unique_ptr<PrototypeAST> Proto, std::unique_ptr<ExprAST> Body)
+  FunctionAST(std::unique_ptr<PrototypeAST> Proto,
+              std::unique_ptr<ExprAST> Body)
       : Proto(std::move(Proto)), Body(std::move(Body)) {}
 };
 
@@ -287,23 +287,23 @@ static std::unique_ptr<PrototypeAST> ParsePrototype() {
 }
 
 // definition ::= 'def' prototype expression
-static std::unique_ptr<FuncionAST> ParseDefinition() {
+static std::unique_ptr<FunctionAST> ParseDefinition() {
   getNextToken();
   auto Proto = ParsePrototype();
   if (!Proto)
     return nullptr;
 
   if (auto E = ParseExpression())
-    return std::make_unique<FuncionAST>(std::move(Proto), std::move(E));
+    return std::make_unique<FunctionAST>(std::move(Proto), std::move(E));
 
   return nullptr;
 }
 
-static std::unique_ptr<FuncionAST> ParseTopLevelExpression() {
+static std::unique_ptr<FunctionAST> ParseTopLevelExpression() {
   if (auto E = ParseExpression()) {
     auto Proto = std::make_unique<PrototypeAST>("__anon_expr",
                                                 std::vector<std::string>());
-    return std::make_unique<FuncionAST>(std::move(Proto), std::move(E));
+    return std::make_unique<FunctionAST>(std::move(Proto), std::move(E));
   }
   return nullptr;
 }
@@ -368,10 +368,10 @@ int main() {
   BinopPrecedence['-'] = 20;
   BinopPrecedence['*'] = 40;
 
-	fprintf(stderr, "ready> ");
-	getNextToken();
+  fprintf(stderr, "ready> ");
+  getNextToken();
 
-	MainLoop();
+  MainLoop();
 
   return 0;
 }
