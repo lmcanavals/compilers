@@ -10,6 +10,10 @@
 #include <algorithm>
 #include <any>
 #include <iostream>
+#include <llvm/ADT/StringRef.h>
+#include <llvm/IR/Function.h>
+#include <llvm/IR/Instructions.h>
+#include <llvm/IR/Type.h>
 #include <llvm/Support/raw_ostream.h>
 #include <map>
 #include <memory>
@@ -51,6 +55,16 @@ private:
   std::unique_ptr<llvm::LLVMContext> context;
   std::unique_ptr<llvm::Module> module;
   std::unique_ptr<llvm::IRBuilder<>> builder;
+
+  // aux
+  llvm::Function *F;
+
+  // aux methods
+  llvm::AllocaInst *CreateEntryBlockAlloca(llvm::StringRef varName) {
+    llvm::IRBuilder<> TmpB(&F->getEntryBlock(), F->getEntryBlock().begin());
+    return TmpB.CreateAlloca(llvm::Type::getDoubleTy(*context), nullptr,
+                             varName);
+  }
 };
 
 #endif
