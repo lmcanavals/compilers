@@ -39,8 +39,27 @@
 *[lL]istener.*
 *[lL]exer.*
 *[pP]arser.*
+*[vV]isitor.*
 *.interp
 *.tokens
 *.class
 !*Parser.g4
 !*Lexer.g4
+
+# Custom for llvm
+*.s
+*.ll
+*.dot
+*.png
+*.arm
+
+# Custom for Cmake
+build/
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+compile_commands.json
+Makefile
+
+# Custom for clangd
+.cache/
