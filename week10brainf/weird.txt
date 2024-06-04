@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.20)
+project(BrainF)
+
+find_package(LLVM 19 REQUIRED CONFIG)
+add_definitions(${LLVM_LIB_DIRS})
+include_directories(${LLVM_INCLUDE_DIRS})
+
+message(STATUS "LLVM VERSION : ${LLVM_PACKAGE_VERSION}")
+message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
+
+add_executable(BrainF
+  BrainF.cpp
+  BrainFDriver.cpp
+)
+
+set(LLVM_LINK_COMPONENTS
+  BitWriter
+  Core
+  ExecutionEngine
+  MC
+  MCJIT
+  Support
+  nativecodegen
+  )
+
+target_link_libraries(BrainF ${LLVM_LINK_COMPONENTS})
